@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 #include<stdlib.h>
 typedef struct DateTime{
     int ngay;
@@ -41,6 +42,7 @@ void xuat(Sach *khosach, int sotuasach);
 // so sanh 2 cuon sach
 bool equal(Sach *sach, Sach *other);
 void themVaoKho(Sach *&khosach, int &sotuasach, Sach *sach, int socuon);
+void  xuatKho(Sach *&khosach, int &sotuasach, Sach *sach, int socuon);
 int main(){
     NguoiMuon *nguoimuon;
     Sach *sach,*khosach;
@@ -50,11 +52,8 @@ int main(){
     sach = (Sach*)malloc(sizeof(Sach));
     nhap(sach);
     themVaoKho(khosach,sotuasach,sach,13);
+    xuatKho(khosach,sotuasach,sach,14);
     xuat(khosach,sotuasach);
-    // nguoimuon = (NguoiMuon*)malloc(sizeof(NguoiMuon));
-    // nhap(nguoimuon);
-    // xuat(nguoimuon);
-    // thêm vào kho
     return 0;
 }
 void nhap(DateTime *time){
@@ -109,7 +108,8 @@ void nhap(Sach *sach){
 void xuat(Sach *sach){
     printf("%s %s ",sach->masach,sach->ten);
     xuat(sach->tacgia);
-    xuat(sach->nhaxuatban);   
+    xuat(sach->nhaxuatban); 
+    printf(" %d",sach->soluong);  
 }
 void nhap(NguoiMuon *nguoiMuon){
     printf("ma nguoi muon: ");
@@ -142,7 +142,32 @@ void themVaoKho(Sach *&khosach, int &sotuasach,Sach *sach, int socuon){
     }
 }
 void xuat(Sach *khosach, int sotuasach){
+    if(sotuasach == 0){
+        printf("\nThong bao:Khong co sach trong kho!");
+    }
     for(int index = 0; index < sotuasach;index++){
         xuat(&khosach[index]);
+    }
+}
+void  xuatKho(Sach *&khosach, int &sotuasach, Sach *sach, int socuon){
+    bool cotrongkho = false;
+    for(int index = 0; index < sotuasach;index++){
+        if(strcmp(khosach[index].masach,sach->masach)==0){// có sách
+            if(khosach[index].soluong>socuon){
+                khosach[index].soluong-=socuon;
+            }
+            else{
+               sotuasach--;
+               for(int next = index; next<sotuasach; next++){
+                   khosach[next] = khosach[next+1];
+               }
+               khosach = (Sach*) realloc(khosach,sotuasach*sizeof(Sach));
+            }
+        }
+        cotrongkho = true;
+        break;
+    }
+    if(!cotrongkho){
+        printf("khong co sach de xuat!");
     }
 }
