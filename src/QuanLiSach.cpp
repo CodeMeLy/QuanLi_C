@@ -19,6 +19,8 @@ typedef struct Sach{
     char ten[30];
     Tacgia *tacgia;
     Nhaxuatban *nhaxuatban;
+    int soluong;
+    float gia;
 };
 typedef struct NguoiMuon{
     char manguoimuon[30];
@@ -29,15 +31,17 @@ void nhap(DateTime *time);
 void nhap(Nhaxuatban *nhaxuatban);
 void nhap(Tacgia *tacgia);
 void nhap(Sach *sach);
+void nhap(NguoiMuon *nguoiMuon);
 void xuat(DateTime *time);
 void xuat(Nhaxuatban *nhaxuatban);
 void xuat(Tacgia *tacgia);
 void xuat(Sach *sach);
+void xuat(NguoiMuon *nguoiMuon);
 int main(){
-    Sach *sach;
-    sach = (Sach*)malloc(sizeof(Sach));
-    nhap(sach);
-    xuat(sach);
+    NguoiMuon *nguoimuon;
+    nguoimuon = (NguoiMuon*)malloc(sizeof(NguoiMuon));
+    nhap(nguoimuon);
+    xuat(nguoimuon);
     return 0;
 }
 void nhap(DateTime *time){
@@ -84,9 +88,24 @@ void nhap(Sach *sach){
     printf("Nha xuat ban: ");
     sach->nhaxuatban=(Nhaxuatban *)malloc(sizeof(Nhaxuatban));
     nhap(sach->nhaxuatban);
+    printf("Gia:");
+    scanf("%f",&sach->gia);
+    fflush(stdin);
+    sach->soluong=0;
 }
 void xuat(Sach *sach){
     printf("%s %s ",sach->masach,sach->ten);
     xuat(sach->tacgia);
     xuat(sach->nhaxuatban);   
+}
+void nhap(NguoiMuon *nguoiMuon){
+    printf("ma nguoi muon: ");
+    gets(nguoiMuon->manguoimuon);
+    printf("sach: ");
+    nguoiMuon->sach=(Sach *)malloc(sizeof(Sach));
+    nhap(nguoiMuon->sach);
+}
+void xuat(NguoiMuon *nguoiMuon){
+    printf("%s", nguoiMuon->manguoimuon);
+    xuat(nguoiMuon->sach);
 }
