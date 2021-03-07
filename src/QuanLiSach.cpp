@@ -49,7 +49,6 @@ int main(){
     khosach = (Sach*)malloc(0);
     sach = (Sach*)malloc(sizeof(Sach));
     nhap(sach);
-    // khosach = (Sach*)realloc(khosach,sotuasach*sizeof(Sach));
     themVaoKho(khosach,sotuasach,sach,13);
     xuat(khosach,sotuasach);
     // nguoimuon = (NguoiMuon*)malloc(sizeof(NguoiMuon));
@@ -128,14 +127,14 @@ bool equal(Sach *sach, Sach *other){
 }
 void themVaoKho(Sach *&khosach, int &sotuasach,Sach *sach, int socuon){
     bool cotrongkho = false;
-    for(int index = 0; index <sotuasach;index++){
+    for(int index = 0; index <sotuasach;index++){//NOTE: kiểm tra nếu có trong kho thì tăng số lượng
         if(equal(sach,&*(khosach+index))){
             khosach[index].soluong += socuon;
             cotrongkho = true;
             break;
         }
     }
-    if(!cotrongkho){
+    if(!cotrongkho){//NOTE: không có trong kho thì thêm vào kho
         sotuasach++;
         khosach = (Sach*)realloc(khosach,sotuasach*sizeof(Sach));
         *(khosach+sotuasach-1) = *sach;
