@@ -8,7 +8,7 @@ typedef struct DateTime{
 typedef struct Tacgia{
     char matacgia[30];
     char tentacgia[30];
-    DateTime ngaysinh;
+    DateTime *ngaysinh;
 };
 typedef struct Nhaxuatban{
     char manhaxuatban[30];
@@ -29,13 +29,15 @@ typedef struct NguoiMuon{
 // ngay thang
 void nhap(DateTime *time);
 void nhap(Nhaxuatban *nhaxuatban);
+void nhap(Tacgia *tacgia);
 void xuat(DateTime *time);
 void xuat(Nhaxuatban *nhaxuatban);
+void xuat(Tacgia *tacgia);
 int main(){
-    Nhaxuatban *nhaxuatban;
-    nhaxuatban = (Nhaxuatban*)malloc(sizeof(Nhaxuatban));
-    nhap(nhaxuatban);
-    xuat(nhaxuatban);
+    Tacgia *tacgia;
+    tacgia = (Tacgia*)malloc(sizeof(Tacgia));
+    nhap(tacgia);
+    xuat(tacgia);
     return 0;
 }
 void nhap(DateTime *time){
@@ -57,4 +59,16 @@ void nhap(Nhaxuatban *nhaxuatban){
 }
 void xuat(Nhaxuatban *nhaxuatban){
     printf("%s %s",nhaxuatban->manhaxuatban,nhaxuatban->tennhaxuatban);
+}
+void nhap(Tacgia *tacgia){
+    printf("Ma tac gia: ");
+    gets(tacgia->matacgia);
+    printf ("Ten tac gia: ");
+    gets(tacgia->tentacgia);
+    tacgia->ngaysinh = (DateTime*)(malloc(sizeof(DateTime)));
+    nhap(tacgia->ngaysinh);
+}
+void xuat(Tacgia *tacgia){
+    printf("%s %s ",tacgia->matacgia,tacgia->tentacgia);
+    xuat(tacgia->ngaysinh);
 }
