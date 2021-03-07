@@ -26,7 +26,7 @@ typedef struct NguoiMuon{
     char manguoimuon[30];
     Sach *sach;  
 };
-// ngay thang
+// nhap xuat
 void nhap(DateTime *time);
 void nhap(Nhaxuatban *nhaxuatban);
 void nhap(Tacgia *tacgia);
@@ -37,11 +37,25 @@ void xuat(Nhaxuatban *nhaxuatban);
 void xuat(Tacgia *tacgia);
 void xuat(Sach *sach);
 void xuat(NguoiMuon *nguoiMuon);
+void xuat(Sach *khosach, int sotuasach);
+// so sanh 2 cuon sach
+bool equal(Sach *sach, Sach *other);
+void themVaoKho(Sach *&khosach, int &sotuasach, Sach *sach, int socuon);
 int main(){
     NguoiMuon *nguoimuon;
-    nguoimuon = (NguoiMuon*)malloc(sizeof(NguoiMuon));
-    nhap(nguoimuon);
-    xuat(nguoimuon);
+    Sach *sach,*khosach;
+    int sotuasach = 0;
+    // thêm sách
+    khosach = (Sach*)malloc(0);
+    sach = (Sach*)malloc(sizeof(Sach));
+    nhap(sach);
+    // khosach = (Sach*)realloc(khosach,sotuasach*sizeof(Sach));
+    themVaoKho(khosach,sotuasach,sach,13);
+    xuat(khosach,sotuasach);
+    // nguoimuon = (NguoiMuon*)malloc(sizeof(NguoiMuon));
+    // nhap(nguoimuon);
+    // xuat(nguoimuon);
+    // thêm vào kho
     return 0;
 }
 void nhap(DateTime *time){
@@ -108,4 +122,28 @@ void nhap(NguoiMuon *nguoiMuon){
 void xuat(NguoiMuon *nguoiMuon){
     printf("%s", nguoiMuon->manguoimuon);
     xuat(nguoiMuon->sach);
+}
+bool equal(Sach *sach, Sach *other){
+    return sach->masach == other->masach;
+}
+void themVaoKho(Sach *&khosach, int &sotuasach,Sach *sach, int socuon){
+    bool cotrongkho = false;
+    for(int index = 0; index <sotuasach;index++){
+        if(equal(sach,&*(khosach+index))){
+            khosach[index].soluong += socuon;
+            cotrongkho = true;
+            break;
+        }
+    }
+    if(!cotrongkho){
+        sotuasach++;
+        khosach = (Sach*)realloc(khosach,sotuasach*sizeof(Sach));
+        *(khosach+sotuasach-1) = *sach;
+        khosach[sotuasach-1].soluong = socuon;
+    }
+}
+void xuat(Sach *khosach, int sotuasach){
+    for(int index = 0; index < sotuasach;index++){
+        xuat(&khosach[index]);
+    }
 }
