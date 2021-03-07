@@ -14,9 +14,6 @@ typedef struct Nhaxuatban{
     char manhaxuatban[30];
     char tennhaxuatban[30];
 };
-// ngay thang
-void nhap(DateTime *time);
-void xuat(DateTime *time);
 typedef struct Sach{
     char masach[30];
     char ten[30];
@@ -27,14 +24,18 @@ typedef struct Sach{
 };
 typedef struct NguoiMuon{
     char manguoimuon[30];
-    Sach *sach;
-    
+    Sach *sach;  
 };
+// ngay thang
+void nhap(DateTime *time);
+void nhap(Nhaxuatban *nhaxuatban);
+void xuat(DateTime *time);
+void xuat(Nhaxuatban *nhaxuatban);
 int main(){
-    DateTime *ngaysinh;
-    ngaysinh = (DateTime*)malloc(sizeof(DateTime));
-    nhap(ngaysinh);
-    xuat(ngaysinh);
+    Nhaxuatban *nhaxuatban;
+    nhaxuatban = (Nhaxuatban*)malloc(sizeof(Nhaxuatban));
+    nhap(nhaxuatban);
+    xuat(nhaxuatban);
     return 0;
 }
 void nhap(DateTime *time){
@@ -47,4 +48,13 @@ void nhap(DateTime *time){
 }
 void xuat(DateTime *time){
     printf("%d/%d/%d",time->ngay,time->thang,time->nam);
+}
+void nhap(Nhaxuatban *nhaxuatban){
+    printf("ma nha xuat ban:");
+    gets(nhaxuatban->manhaxuatban);
+    printf("ten nha xuat ban:");
+    gets(nhaxuatban->tennhaxuatban);
+}
+void xuat(Nhaxuatban *nhaxuatban){
+    printf("%s %s",nhaxuatban->manhaxuatban,nhaxuatban->tennhaxuatban);
 }
